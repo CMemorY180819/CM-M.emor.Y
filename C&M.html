@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>M.emor.Y</title>
+	<style>
+		*{
+			margin: 0;padding:0;
+		}
+		ul, li
+		{
+			list-style: none;
+		}
+		body
+		{
+			font: 12px/20px "Microsoft Yahei", "SimSun", Arial, sans-serif;
+			background: rgb(246, 246, 246);
+		}
+		.heartPic
+		{
+			width: 749px;
+			height: 50px;
+			margin: 150px auto 0 150px;
+		}
+		.ycc-words
+		{
+			font: 20px/100px "Microsoft Yahei", "SimSun", Arial, sans-serif;
+			height:800px;
+			/*margin: 150px 50px 0 0;*/
+		}
+		.ycc-words li
+		{
+			color: #ffd4e2;
+		}
+		.heartPic ul
+		{
+			float: left;
+			width: 749px;
+		}
+		.heartPic ul li
+		{
+			float: left;
+			width: 100px;
+			height: 100px;
+			padding: 2px;
+			cursor: pointer;
+		}
+		.heartPic ul li.on
+		{
+			z-index: 99;
+		}
+		.heartPic ul li.on .in
+		{
+			position: relative;
+			left: -50px;
+			top: -50px;
+			padding: 5px 5px 20px 5px;
+			background: #666;
+		}
+		.heartPic ul li .pTxt
+		{
+			display: block;
+			width: 100px;
+			height: 15px;
+			text-align: center;
+			color: #fff;
+			overflow: hidden;
+		}
+		.heartPic .showDiv
+		{
+			display: block;
+		}
+		.ycc-progress {
+			margin-top: 15px;
+		}
+		.ycc-progress .ycc-progress-top {
+			position: relative;
+			padding-left: 15px;
+			font-size: 18px;
+			height: 40px;
+			line-height: 40px;
+		}
+		.ycc-progress .ycc-progress-top:before {
+			content: '';
+			display: block;
+			position: absolute;
+			width: 8px;
+			height: 20px;
+			left: 0;
+			top: 10px;
+			background: #e10482;
+			border-radius: 5px;
+		}
+		.ycc-progress .ycc-progress-bottom {
+			border-radius: 5px;
+			border: #f2f2f2 solid 1px;
+			padding: 15px;
+			position: relative;
+			height: auto;
+			width: auto;
+		}
+		.ycc-progress .ycc-progress-bottom p > span {
+			color: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box {
+			height: 120px;
+			padding: 10px 0 0 100px;
+			position: absolute;
+			top: 60px;
+			width: 1024px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.bgtwos {
+			z-index: 1;
+			top: 55px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.bgtwos dl dt {
+			border: #f2f2f2 solid 5px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.v0 dl:nth-of-type(1) dt {
+			background: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.v1 dl:nth-of-type(2) dt {
+			background: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.v2 dl:nth-of-type(3) dt {
+			background: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.v3 dl:nth-of-type(4) dt {
+			background: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box.v4 dl:nth-of-type(5) dt {
+			background: #e10482;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box dl {
+			width: 100px;
+			text-align: center;
+			float: left;
+			margin-right: 65px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box dl dt {
+			width: 50px;
+			height: 50px;
+			background: #999999;
+			color: #fff;
+			text-align: center;
+			line-height: 50px;
+			border-radius: 50%;
+			margin: 0 auto;
+			overflow: hidden;
+			position: relative;
+			z-index: 3;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box dl dd {
+			padding-top: 5px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box {
+			position: absolute;
+			width: 1024px;
+			height: 20px;
+			border-radius: 10px;
+			border: #f2f2f2 solid 5px;
+			background: #fff;
+			/*z-index: 2;*/
+			top: 20px;
+			left: 112px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i {
+			position: absolute;
+			height: 20px;
+			background: #e10482;
+			left: 36px;
+			top: 0;
+			width: 0;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i.progress-box-2 {
+			left: 191px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i.progress-box-3 {
+			left: 365px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i.progress-box-4 {
+			left: 540px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i.progress-box-5 {
+			left: 706px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i span {
+			position: absolute;
+			display: inline-block;
+			*zoom: 1;
+			*display: inline;
+			background: #fff;
+			border-radius: 5px;
+			height: 30px;
+			line-height: 30px;
+			font-weight: normal;
+			font-size: 12px;
+			font-style: normal;
+			border: #cccccc solid 1px;
+			right: -80px;
+			top: -50px;
+			padding: 0 10px;
+			width: 135px;
+			text-align: center;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i span:before {
+			content: '';
+			display: block;
+			position: absolute;
+			border-width: 10px;
+			border-style: solid;
+			border-color: #ccc transparent transparent transparent;
+			bottom: -20px;
+			left: 50%;
+			margin-left: -10px;
+		}
+		.ycc-progress .ycc-progress-bottom .ycc-progress-box .progress-box i span:after {
+			content: '';
+			display: block;
+			position: absolute;
+			border-width: 10px;
+			border-style: solid;
+			border-color: #fff transparent transparent transparent;
+			bottom: -19px;
+			left: 50%;
+			margin-left: -10px;
+		}
+	</style>
+	<!-- 引用内部库，仓仓小童鞋立马就能上 -->
+	<script src="resource/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="ycc-progress">
+	<div class="ycc-progress-bottom">
+		<!-- 给仓仓制订的等级样式 -->
+		<!-- v0 2018-02-12初识 -->
+		<!-- v1 2018-04-16小姐姐 -->
+		<!-- v2 2018-07-14相遇 -->
+		<!-- v3 2018-08-19表白 -->
+		<!-- v4 Forever And Ever~ -->
+		<div class="ycc-progress-box v0" id="ycc-progress-id">
+			<dl>
+				<dt>0</dt>
+				<dd><span class="member-ico v0"></span>2018-02-12初识</dd>
+			</dl>
+			<dl>
+				<dt>200</dt>
+				<dd><span class="member-ico v1"></span>2018-04-16小姐姐</dd>
+			</dl>
+			<dl>
+				<dt>1000</dt>
+				<dd><span class="member-ico v2"></span>2018-07-14相遇</dd>
+			</dl>
+			<dl>
+				<dt>5000</dt>
+				<dd><span class="member-ico v3"></span>2018-08-19表白</dd>
+			</dl>
+			<dl>
+				<dt>9999</dt>
+				<dd><span class="member-ico v4"></span>Forever And Ever~</dd>
+			</dl>
+			<div class="progress-box" id="progress_content" data-progress="12000">
+				<i class="progress-box-1"></i>
+				<!-- 200 -->
+				<i class="progress-box-2"></i>
+				<!-- 1000 -->
+				<i class="progress-box-3"></i>
+				<!-- 5000 -->
+				<i class="progress-box-4"></i>
+				<!-- 10000 -->
+				<i class="progress-box-5"></i>
+				<!-- 10000+ -->
+			</div>
+		</div>
+		<div class="ycc-progress-box bgtwos">
+			<dl> <dt></dt> </dl> <dl> <dt></dt> </dl> <dl> <dt></dt> </dl> <dl> <dt></dt> </dl> <dl> <dt></dt> </dl>
+		</div>
+	</div>
+</div>
+
+<div class="heartPic">
+	<div id="ycc-heart">
+		<ul>
+			<li></li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_01.jpg" />
+					<p class="pTxt">
+						瞳孔清澈的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_02.jpg" />
+					<p class="pTxt">
+						培训爱笑的某只</p>
+				</div>
+			</li>
+			<li></li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_03.jpg" />
+					<p class="pTxt">
+						耍可爱自拍的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_04.jpg" />
+					<p class="pTxt">
+						减肥了迫不及待炫耀的某只</p>
+				</div>
+			</li>
+			<li></li>
+		</ul>
+		<ul>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_05.jpg" />
+					<p class="pTxt">
+						含棒棒糖的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_06.jpg" />
+					<p class="pTxt">
+						毕业耍帅的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_07.jpg" />
+					<p class="pTxt">
+						毕业敲可爱的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_08.jpg" />
+					<p class="pTxt">
+						仓&毛爪子</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_09.jpg" />
+					<p class="pTxt">
+						正装自拍的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_10.jpg" />
+					<p class="pTxt">
+						阳光下自拍的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_11.jpg" />
+					<p class="pTxt">
+						炫耀带回来的碎碎冰的某只</p>
+				</div>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_12.jpg" />
+					<p class="pTxt">
+						大衣穿起来的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_13.jpg" />
+					<p class="pTxt">
+						试衣间的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_14.jpg" />
+					<p class="pTxt">
+						毛毛！</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_15.jpg" />
+					<p class="pTxt">
+						没有白天的仓&毛</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_16.jpg" />
+					<p class="pTxt">
+						仓仓！</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_17.jpg" />
+					<p class="pTxt">
+						耍帅的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_18.jpg" />
+					<p class="pTxt">
+						看马术的某只</p>
+				</div>
+			</li>
+		</ul>
+		<ul>
+			<li></li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_19.jpg" />
+					<p class="pTxt">
+						有漂亮的头发的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_20.jpg" />
+					<p class="pTxt">
+						被偷拍工作的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_21.jpg" />
+					<p class="pTxt">
+						最爱的狗子！</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_22.jpg" />
+					<p class="pTxt">
+						侧着脸不显胖的某只</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_23.jpg" />
+					<p class="pTxt">
+						COS古装的某只</p>
+				</div>
+			</li>
+			<li></li>
+		</ul>
+		<ul>
+			<li></li>
+			<li></li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_24.jpg" />
+					<p class="pTxt">
+						闺蜜&仓仓</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_25.jpg" />
+					<p class="pTxt">
+						凑热闹～</p>
+				</div>
+			</li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_26.jpg" />
+					<p class="pTxt">
+						婚礼&毛毛</p>
+				</div>
+			</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li>
+				<div class="in">
+					<img width="100" height="100" src="img/CM_27.jpg" />
+					<p class="pTxt">
+						在一起啦</p>
+				</div>
+			</li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</div>
+
+<div class="ycc-words">
+	<ul>
+		<li class="li1">我住长江头，君住长江尾。</li>
+		<li class="li2">日日思君不见君，共饮长江水。</li>
+		<li class="li3">此水几时休，此恨何时已。</li>
+		<li class="li4">只愿君心似我心，定不负相思意。❤️</li>
+	</ul>
+</div>
+
+<audio autoplay="autoplay" loop="loop">
+<source src="resource/C&M.mp3" type="audio/mpeg">
+</audio>
+
+<!-- <embed src="resource/C&M.mp3" hidden="true" autostart="true" loop="true"> -->
+
+<script type="text/javascript">
+    ;(function(){
+        var ycc_progress_id = $('#ycc-progress-id');
+        var progress_content = $('#progress_content');
+        var l = 0;
+        // 设定到达值 --> 暂时写死8000
+        var _number = progress_content.attr('data-progress');
+        var timer = null;
+        var pro = 0;
+
+        if ( _number < 200 ) {
+            lad(_number, 200, '.progress-box-1',function(){
+                $('.progress-box-1').append('<span>For More~~~</span>');
+            });
+        };
+
+        if ( _number >= 200 && _number < 1000  ) {
+            lad(200, 200, '.progress-box-1', function(){
+                ycc_progress_id.addClass('v1');
+                lad(_number-200, 1000-200, '.progress-box-2',function(){
+                    $('.progress-box-2').addClass('active');
+                    $('.progress-box-2').append('<span>For More~~~</span>');
+                });
+            });
+        };
+
+        if ( _number >= 1000 && _number < 5000  ) {
+            lad(200, 200, '.progress-box-1', function(){
+                ycc_progress_id.addClass('v1')
+                lad(1000, 1000, '.progress-box-2',function(){
+                    ycc_progress_id.addClass('v2');
+                    lad(_number-1000, 5000-1000, '.progress-box-3',function(){
+                        $('.progress-box-3').addClass('active');
+                        $('.progress-box-3').append('<span>For More~~~</span>');
+                    })
+                });
+            });
+        };
+
+        if ( _number >= 5000 && _number < 10000  ) {
+            lad(200, 200, '.progress-box-1', function(){
+                ycc_progress_id.addClass('v1')
+                lad(1000, 1000, '.progress-box-2',function(){
+                    ycc_progress_id.addClass('v2')
+                    lad(5000, 5000, '.progress-box-3', function(){
+                        ycc_progress_id.addClass('v3')
+                        lad(_number-5000, 10000-5000, '.progress-box-4',function(){
+                            $('.progress-box-4').addClass('active');
+                            $('.progress-box-4').append('<span>For More~~~</span>');
+                        })
+                    })
+                });
+            });
+        };
+
+        if ( _number >= 10000) {
+            lad(200, 200, '.progress-box-1', function(){
+                ycc_progress_id.addClass('v1')
+                lad(1000, 1000, '.progress-box-2',function(){
+                    ycc_progress_id.addClass('v2')
+                    lad(5000, 5000, '.progress-box-3', function(){
+                        ycc_progress_id.addClass('v3')
+                        lad(10000, 10000, '.progress-box-4',function(){
+                            ycc_progress_id.addClass('v4')
+                            lad(_number-10000,15000-10000,'.progress-box-5', function () {
+                                $('.progress-box-5').addClass('active');
+                                $('.progress-box-5').append('<span>You are the one...</span>');
+                                $("#ycc-heart").show();
+                            })
+                        })
+                    })
+                });
+            });
+        };
+
+        /**
+         * description: 心形图片的淡入淡出
+         *
+         * @date 2018/9/22 下午6:53
+         * @author gang.xu01@hand-china.com
+         *
+         * @return
+         * @throws
+         */
+        $(".heartPic li").hover(function () {
+            $(this).addClass("on");
+            $(this).find("img").animate({ "width": "251px", "height": "251px" });
+            $(this).find("div").animate({ "width": "251px", "height": "265px" });
+            $(this).find(".pTxt").animate({ "width": "251px", "height": "50px" });
+            $(this).find("p").addClass("showDiv");
+        }, function () {
+            $(this).animate({ height: "100px" }, 100).removeClass("on");
+            $(this).find("img").stop(true, true).animate({ "width": "100px", "height": "100px" });
+            $(this).find("div").stop(true, true).animate({ "width": "100px", "height": "100px" });
+            $(this).find(".pTxt").stop(true, true).animate({ "width": "0px", "height": "0px" });
+        });
+
+		/**
+		 * description: 方法描述
+		 *
+		 * @date 2018/9/15 下午2:35
+		 * @author gang.xu01@hand-china.com
+		 * @param number
+		 * @param max
+		 * @param cls
+		 * @param callback
+		 *
+		 * @return
+		 * @throws
+		 */
+        function lad(number, max, cls, callback){
+            l = 0;
+            timer = setInterval(function(){
+                if ( number <= 200 ) {
+                    l++;
+                }else if( number > 200 && number <= 1000 ){
+                    l+=2;
+                }else if( number > 1000 && number <= 5000 ){
+                    l+=5;
+                }else if( number > 5000 && number <= 10000 ){
+                    l+=10;
+                }else{
+                    l+=20;
+                };
+
+                pro = (l/max)*150;				//150为  div的长度
+                if ( l >= number ) {
+                    clearInterval(timer);
+                    if ( callback ) callback();   //回调
+                };
+                $(cls).css({
+                    width : pro+'px'
+                })
+            },1)
+        }
+    })();
+
+
+</script>
+</body>
+</html>
